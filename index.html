@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qlik Action Layer | allmates.ai Italia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* allmates Official Gradient */
+            --allmates-gradient: linear-gradient(90deg, #9DE3FD 0%, #70AFED 25%, #888CE9 50%, #B393E3 70%, #E3AFA0 85%, #E28675 100%);
+            
+            /* Colors */
+            --bg-dark: #09090b;
+            --bg-card: #18181b;
+            --bg-card-hover: #27272a;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: #27272a;
+            
+            /* Spacing & Layout */
+            --container-width: 1200px;
+            --section-padding: 6rem 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .text-gradient {
+            background: var(--allmates-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-8 { margin-top: 2rem; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--allmates-gradient);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(157, 227, 253, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--text-muted);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: var(--allmates-gradient);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: var(--section-padding);
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #888CE9; /* Mid-gradient color */
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: var(--section-padding);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            background: rgba(136, 140, 233, 0.1);
+            color: #888CE9;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(136, 140, 233, 0.2);
+        }
+
+        .story-content h2 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .placeholder-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--allmates-gradient);
+            opacity: 0.05;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            padding: var(--section-padding);
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .timeline-step {
+            position: relative;
+        }
+
+        .timeline-step .time {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .timeline-step .title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-step p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Scenarios */
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: var(--section-padding);
+        }
+
+        .scenario-card {
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--allmates-gradient);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .scenario-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .scenario-highlight {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #9DE3FD;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-box {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .scenario-box span {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Bottom */
+        .cta-bottom {
+            padding: 8rem 2rem;
+            text-align: center;
+        }
+
+        .cta-bottom h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .footer-raising {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #70AFED;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .features-grid, .story-section, .scenarios-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero-cta { flex-direction: column; }
+            .timeline-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">allmates<span class="text-gradient">.ai</span></a>
+        <div class="nav-links">
+            <a href="#">Piattaforma</a>
+            <a href="#">Risorse</a>
+            <a href="#">Prezzi</a>
+            <a href="#">Azienda</a>
+        </div>
+        <div>
+            <a href="#" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Accedi</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero container">
+            <h1 class="fade-in">Sblocca la tua Intelligenza. <br><span class="text-gradient">L'Action Layer per Qlik.</span></h1>
+            <p class="fade-in">Hai costruito un cervello analitico di prim'ordine con Qlik. Ora, dagli le mani per agire. Trasforma gli insight bloccati in risultati di business automatizzati con allmates.ai, l'Agentic Execution Layer definitivo per le aziende.</p>
+            <div class="hero-cta fade-in">
+                <a href="#" class="btn btn-primary">Inizia la tua prova gratuita</a>
+                <a href="#" class="btn btn-secondary">Richiedi un Action Audit di 30 giorni</a>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="container features-grid">
+            <div class="feature-card">
+                <h3>Esecuzione Autonoma</h3>
+                <p>I Mates gestiscono le attività ripetitive tra i tuoi vari sistemi (SAP, Salesforce, Teams, ecc.), liberando il tuo team.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Velocità degli Agenti</h3>
+                <p>Riduci drasticamente il tempo che intercorre tra "insight" e "azione", passando da ore a millisecondi.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Human-in-the-Loop</h3>
+                <p>Mantieni il controllo strategico. I Mates preparano le azioni; tu fornisci l'approvazione finale con un singolo clic.</p>
+            </div>
+        </section>
+
+        <!-- Story -->
+        <section class="container story-section">
+            <div class="story-content">
+                <span class="badge">Ti presentiamo i tuoi colleghi AI</span>
+                <h2>Smetti di fare il "Connettore Umano" tra i tuoi Sistemi</h2>
+                <p>Gli insight si trovano in Qlik, ma il lavoro avviene in SAP, Salesforce e Teams. Attualmente, le tue risorse più preziose passano decine di ore a settimana a fare da "ponti umani", spostando manualmente i dati dalle dashboard ai sistemi operativi.</p>
+                <p class="mt-8">Questo è il freno operativo. È la principale causa di perdita di ROI sui dati. Nell'era dell'AI basata su Agenti, un cervello senza mani è uno svantaggio competitivo.</p>
+            </div>
+            <div class="placeholder-image">
+                [Illustrazione: Flusso da Qlik a SAP/Salesforce]
+            </div>
+        </section>
+
+        <!-- MCP Integration -->
+        <section class="container" style="padding: var(--section-padding);">
+            <div class="text-center mb-8">
+                <span class="badge">Governance e Analisi</span>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Dai un paio di mani al tuo cervello Qlik</h2>
+                <p style="color: var(--text-muted); max-width: 800px; margin: 0 auto;">Non si tratta di un generico chatbot che legge un PDF. I nostri agenti parlano nativamente Qlik. Sfruttando il nuovo Model Context Protocol (MCP), gli Agenti allmates si collegano direttamente al core del tuo Qlik Engine.</p>
+            </div>
+
+            <div class="features-grid" style="padding: 0; margin-top: 3rem;">
+                <div class="feature-card">
+                    <h3 class="text-gradient">Accesso Nativo al Motore</h3>
+                    <p>I Mates interrogano direttamente il Motore Associativo di Qlik per ottenere un contesto profondo e totalmente affidabile.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="text-gradient">Ipercubi On-the-Fly</h3>
+                    <p>Gli Agenti possono creare dinamicamente strutture dati per verificare e validare la logica prima di intraprendere qualsiasi azione.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="text-gradient">Governance by Design</h3>
+                    <p>allmates.ai rispetta la sicurezza, i permessi e la data lineage esistenti nel tuo Qlik. Nessuna "Shadow AI", solo esecuzione governata.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline-section">
+            <div class="container">
+                <h2 class="text-center" style="font-size: 2.5rem;">Da Insight ad Azione in 30 Giorni</h2>
+                <div class="timeline-grid">
+                    <div class="timeline-step">
+                        <span class="time">GIORNO 1</span>
+                        <div class="title">Connetti</div>
+                        <p>Collega allmates al tuo Server MCP Qlik in meno di 10 minuti.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <span class="time">SETTIMANA 1</span>
+                        <div class="title">Audit</div>
+                        <p>Identifichiamo i tuoi 3 principali "Action Gaps" manuali con il più alto potenziale di ROI.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <span class="time">SETTIMANA 2</span>
+                        <div class="title">Automatizza</div>
+                        <p>Lancia il tuo primo Digital Co-worker per automatizzare un flusso di lavoro aziendale chiave.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <span class="time">GIORNO 30</span>
+                        <div class="title">Misura</div>
+                        <p>Quantifica le ore manuali risparmiate e scala la tua Forza Lavoro Digitale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenarios -->
+        <section class="container scenarios-grid">
+            <div class="scenario-card">
+                <h3>Supply Chain Commander</h3>
+                <div class="scenario-highlight">Riduzione del 90% dell'admin manuale</div>
+                <p class="mb-4" style="color: var(--text-muted)">Risposta più rapida di 24 ore ai cambiamenti di mercato.</p>
+                
+                <div class="scenario-box">
+                    <span>Trigger</span>
+                    Una dashboard Qlik identifica un calo delle scorte del 15% in un hub regionale.
+                </div>
+                <div class="scenario-box">
+                    <span>Azione Mate</span>
+                    Interroga i tempi di consegna tramite MCP, identifica il fornitore ottimale e prepara un Ordine di Acquisto in SAP.
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <h3>Il Guardiano della Compliance</h3>
+                <div class="scenario-highlight">Settimane di audit manuali risparmiate</div>
+                <p class="mb-4" style="color: var(--text-muted)">Trasformate in un processo automatizzato quasi istantaneo.</p>
+                
+                <div class="scenario-box">
+                    <span>Trigger</span>
+                    Una nuova App Qlik viene pubblicata in uno stream di produzione.
+                </div>
+                <div class="scenario-box">
+                    <span>Azione Mate</span>
+                    Legge nativamente lo script di caricamento, segnala i rischi per i dati PII e genera automaticamente un report di audit.
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <section class="cta-bottom container">
+            <span class="badge">Connetti la tua prima app Qlik in pochi minuti.</span>
+            <h2>Smetti di Rispondere a Domande.<br>Inizia a Fare il Lavoro.</h2>
+            <p class="mb-8" style="color: var(--text-muted); max-width: 600px; margin-inline: auto;">Unisciti al 18% delle aziende che stanno passando dall'"Intelligenza Passiva" all'Esecuzione basata su Agenti. Dai ai tuoi dati il potere di far progredire il tuo business.</p>
+            <a href="#" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Inizia Ora la tua Prova Gratuita</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 allmates.ai - Tutti i diritti riservati.</p>
+            <p class="footer-raising"><strong>rAIsing</strong> - Master Reseller e Distributore Esclusivo allmates per l'Italia</p>
+        </div>
+    </footer>
+
+    <script>
+        // Semplice script per animazioni fade-in allo scroll
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.feature-card, .scenario-card, .timeline-step').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
