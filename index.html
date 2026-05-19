@@ -70,33 +70,56 @@
             flex-shrink: 0;
         }
 
-        /* Animazione Mates "galleggianti" per la sezione finale */
-        @keyframes float {
-            0% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-15px) scale(1.05); }
-            100% { transform: translateY(0px) scale(1); }
+        /* ----- INIZIO STILI AGGIUNTI PER VIDEO E MATES ----- */
+        
+        /* Stili Video Hero con bordi sfumati */
+        .hero-video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            /* Crea l'effetto sfumato sopra e sotto il video */
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+        .hero-video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* Opacità per far leggere bene il testo bianco */
+        }
+
+        /* Stili Avatar CTA Bottom */
+        .cta-section {
+            position: relative;
+            overflow: hidden;
         }
         
-        @keyframes float-reverse {
-            0% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(15px) scale(1.05); }
-            100% { transform: translateY(0px) scale(1); }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
 
         .floating-avatar {
             position: absolute;
             border-radius: 50%;
-            box-shadow: 0 0 40px rgba(136, 140, 233, 0.4);
+            /* FIX SCHIACCIAMENTO */
+            object-fit: cover;
+            aspect-ratio: 1 / 1;
             border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            z-index: 0;
+            z-index: 10; /* Per farli stare SOPRA al testo come da screenshot */
+            animation: float 6s ease-in-out infinite;
         }
-
-        .floating-avatar:hover {
-            transform: scale(1.15) !important;
-            box-shadow: 0 0 60px rgba(157, 227, 253, 0.6);
-            z-index: 10;
-        }
+        
+        /* Posizionamenti esatti come da screenshot 4 */
+        .avatar-1 { width: 170px; height: 170px; top: 30%; right: -5%; box-shadow: 0 0 80px 20px rgba(136, 140, 233, 0.3); animation-delay: 0s; }
+        .avatar-2 { width: 120px; height: 120px; bottom: 0; left: 10%; box-shadow: 0 0 60px 15px rgba(157, 227, 253, 0.2); animation-delay: 2s; }
+        .avatar-3 { width: 70px; height: 70px; top: 5%; left: 5%; box-shadow: 0 0 40px 10px rgba(226, 134, 117, 0.2); animation-delay: 4s; }
+        /* ----- FINE STILI AGGIUNTI ----- */
 
         .badge-pill {
             display: inline-block;
@@ -152,7 +175,7 @@
             .grid-3-cols, .grid-2-cols { grid-template-columns: 1fr; gap: 40px; }
             .grid-4-cols { grid-template-columns: 1fr 1fr; }
             .hero-title { font-size: 48px !important; }
-            .floating-avatar { display: none; /* Nascondi gli avatar galleggianti su mobile per pulizia */ }
+            .floating-avatar { display: none; /* Nasconde gli avatar galleggianti su mobile per pulizia visiva */ }
         }
         @media (max-width: 767px) {
             .grid-4-cols { grid-template-columns: 1fr; }
@@ -180,7 +203,6 @@
                             <a class="nav-menu w-inline-block" href="/platform">
                                 <div class="paragraph-02 nav-text">Platform</div>
                             </a>
-                            <!-- Dropdown Ressources -->
                             <div class="nav-dropdown w-dropdown" data-delay="0" data-hover="true">
                                 <div class="dropdown-toggle w-dropdown-toggle">
                                     <div class="icon w-icon-dropdown-toggle"></div>
@@ -211,7 +233,6 @@
                                     </div>
                                 </nav>
                             </div>
-                            <!-- Dropdown Company -->
                             <div class="nav-dropdown w-dropdown" data-delay="0" data-hover="true">
                                 <div class="dropdown-toggle w-dropdown-toggle">
                                     <div class="icon w-icon-dropdown-toggle"></div>
@@ -266,6 +287,15 @@
 
     <!-- 1. HERO SECTION -->
     <section style="padding: 120px 0 80px; position: relative; overflow: hidden;">
+        
+        <!-- VIDEO BACKGROUND INSERITO QUI -->
+        <div class="hero-video-wrapper">
+            <video autoplay loop muted playsinline>
+                <!-- Sostituisci "hero-bg.mp4" con il nome esatto del video che caricherai in assets/ -->
+                <source src="assets/hero-bg.mp4" type="video/mp4">
+            </video>
+        </div>
+
         <div style="position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: var(--allmates-gradient); filter: blur(150px); opacity: 0.1; z-index: 0; border-radius: 50%; pointer-events: none;"></div>
         
         <div class="custom-container text-center" style="position: relative; z-index: 1;">
@@ -291,7 +321,7 @@
         </div>
     </section>
 
-    <!-- 2. 3 PICCOLE FEATURES (Allineate a sx con barra sfumata, come Allegato 1) -->
+    <!-- 2. 3 PICCOLE FEATURES -->
     <section style="padding: 0 0 100px;">
         <div class="custom-container grid-3-cols" style="text-align: left;">
             <div>
@@ -318,7 +348,7 @@
         </div>
     </section>
 
-    <!-- 3. STORY SECTION (Connettore Umano) -->
+    <!-- 3. STORY SECTION -->
     <section style="padding: 100px 0; border-top: 1px solid var(--border-light);">
         <div class="custom-container grid-2-cols">
             <div>
@@ -339,7 +369,7 @@
         </div>
     </section>
 
-    <!-- 4. MCP INTEGRATION (Testi intermedi inseriti, come Allegato 2) -->
+    <!-- 4. MCP INTEGRATION -->
     <section style="padding: 100px 0; border-top: 1px solid var(--border-light);">
         <div class="custom-container">
             <div class="text-center" style="max-width: 800px; margin: 0 auto 64px;">
@@ -350,7 +380,6 @@
                 </p>
                 <img src="assets/69d67765013be304376c0286_img-banner-qlik-large.avif" alt="MCP Integration" style="width: 100%; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-bottom: 64px;">
                 
-                <!-- Testi intermedi mancanti aggiunti -->
                 <h2 style="font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px;">
                     Integrazione Nativa Qlik tramite il Model Context Protocol (MCP).
                 </h2>
@@ -449,31 +478,35 @@
         </div>
     </section>
 
-    <!-- 7. BOTTOM CTA (Con Mates sparpagliati e fluttuanti, come Allegato 3) -->
-    <section class="text-center" style="padding: 100px 0 160px; position: relative; overflow: hidden;">
-        <!-- Avatar galleggianti posizionati assoluti -->
-        <img src="assets/69bdbfbc0e5f9de7b3f914d6_mate-feed-3.png" class="floating-avatar" style="width: 120px; top: 20%; left: 15%; animation: float 6s ease-in-out infinite;">
-        <img src="assets/69bdbfbc30c9fab3c26e7323_mate-feed-5.png" class="floating-avatar" style="width: 100px; bottom: 15%; left: 20%; animation: float-reverse 7s ease-in-out infinite;">
-        <img src="assets/69bdc41cd21ba2363275a65c_mate-feed-13.png" class="floating-avatar" style="width: 140px; top: 35%; right: 15%; animation: float 8s ease-in-out infinite;">
+    <!-- 7. BOTTOM CTA (CORRETTA CON MATES FLUTTUANTI) -->
+    <section class="text-center cta-section" style="padding: 120px 0 160px;">
+        <div class="custom-container" style="position: relative;">
+            
+            <!-- Avatar galleggianti posizionati in modo assoluto rispetto al contenitore -->
+            <img src="assets/69bdbfbc0e5f9de7b3f914d6_mate-feed-3.png" alt="Mate" class="floating-avatar avatar-3">
+            <img src="assets/69bdbfbc30c9fab3c26e7323_mate-feed-5.png" alt="Mate" class="floating-avatar avatar-2">
+            <img src="assets/69bdc41cd21ba2363275a65c_mate-feed-13.png" alt="Mate" class="floating-avatar avatar-1">
 
-        <div class="custom-container" style="position: relative; z-index: 5;">
-            <p style="font-size: 16px; font-weight: 600; margin-bottom: 24px; color: #fff;">
-                <span style="background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border-light);">
-                    Connetti la tua prima app Qlik <strong class="gradient-text" style="font-weight: 700;">in pochi minuti</strong>.
-                </span>
-            </p>
-            
-            <h2 style="font-size: 72px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px;">
-                Smetti di Rispondere a Domande.<br>Inizia a Fare il Lavoro.
-            </h2>
-            <p style="font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; line-height: 1.6;">
-                Unisciti al 18% delle aziende che stanno passando dall'"Intelligenza Passiva" all'Esecuzione basata su Agenti. Dai ai tuoi dati il potere di far progredire il tuo business.
-            </p>
-            
-           <a href="https://www.allmates.ai/getdemo" class="btn-custom btn-primary" style="padding: 20px 40px; font-size: 18px;">
-                Inizia Ora la tua Prova Gratuita
-                <img src="assets/69b8d32b03ce13513e236af2_Arrow.svg" alt="Arrow" class="btn-icon">
-            </a>
+            <!-- Testo tenuto al di sotto degli avatar tramite z-index inferiore -->
+            <div style="position: relative; z-index: 5;">
+                <p style="font-size: 16px; font-weight: 600; margin-bottom: 24px; color: #fff;">
+                    <span style="background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border-light);">
+                        Connetti la tua prima app Qlik <strong class="gradient-text" style="font-weight: 700;">in pochi minuti</strong>.
+                    </span>
+                </p>
+                
+                <h2 style="font-size: 72px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px;">
+                    Smetti di Rispondere a Domande.<br>Inizia a Fare il Lavoro.
+                </h2>
+                <p style="font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; line-height: 1.6;">
+                    Unisciti al 18% delle aziende che stanno passando dall'"Intelligenza Passiva" all'Esecuzione basata su Agenti. Dai ai tuoi dati il potere di far progredire il tuo business.
+                </p>
+                
+               <a href="https://www.allmates.ai/getdemo" class="btn-custom btn-primary" style="padding: 20px 40px; font-size: 18px;">
+                    Inizia Ora la tua Prova Gratuita
+                    <img src="assets/69b8d32b03ce13513e236af2_Arrow.svg" alt="Arrow" class="btn-icon">
+                </a>
+            </div>
         </div>
     </section>
 
