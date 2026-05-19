@@ -30,7 +30,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* FIX INFALLIBILE PER I MENU A TENDINA (HOVER E POSIZIONAMENTO) */
+        /* FIX MENU TENDINA */
         .nav-dropdown:hover .w-dropdown-list {
             display: block !important;
             opacity: 1 !important;
@@ -41,7 +41,6 @@
             transition: opacity 0.2s ease;
         }
 
-        /* Layout & Utilities per allineamento esatto all'originale */
         .custom-container {
             width: 100%;
             max-width: 1240px;
@@ -58,6 +57,45 @@
             background-clip: text;
             color: transparent;
             display: inline-block;
+        }
+
+        /* Linea sfumata verticale per le features */
+        .accent-line-gradient {
+            width: 3px;
+            height: 28px;
+            background: linear-gradient(to bottom, #E3AFA0, #E28675);
+            display: inline-block;
+            margin-right: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Animazione Mates "galleggianti" per la sezione finale */
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+        
+        @keyframes float-reverse {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(15px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+
+        .floating-avatar {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(136, 140, 233, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            z-index: 0;
+        }
+
+        .floating-avatar:hover {
+            transform: scale(1.15) !important;
+            box-shadow: 0 0 60px rgba(157, 227, 253, 0.6);
+            z-index: 10;
         }
 
         .badge-pill {
@@ -85,41 +123,16 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
-        .btn-primary {
-            background: var(--allmates-gradient);
-            color: #000;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(136, 140, 233, 0.4);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-light);
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        .btn-primary { background: var(--allmates-gradient); color: #000; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(136, 140, 233, 0.4); }
+        .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border-light); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
         .btn-icon { width: 20px; height: 20px; }
 
-        /* Griglie Allineate */
-        .grid-3-cols {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-        .grid-2-cols {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
-        }
-        .grid-4-cols {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-        }
+        /* Griglie */
+        .grid-3-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .grid-2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .grid-4-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 
         /* Cards */
         .qlik-card {
@@ -129,33 +142,17 @@
             padding: 32px;
             transition: transform 0.3s, border-color 0.3s;
         }
-        .qlik-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(136, 140, 233, 0.5);
-        }
-        .qlik-card img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 24px;
-        }
-        .qlik-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-        .qlik-card p {
-            font-size: 16px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin: 0;
-        }
+        .qlik-card:hover { transform: translateY(-5px); border-color: rgba(136, 140, 233, 0.5); }
+        .qlik-card img { width: 100%; border-radius: 8px; margin-bottom: 24px; }
+        .qlik-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+        .qlik-card p { font-size: 16px; color: var(--text-muted); line-height: 1.6; margin: 0; }
 
         /* Responsive */
         @media (max-width: 991px) {
             .grid-3-cols, .grid-2-cols { grid-template-columns: 1fr; gap: 40px; }
             .grid-4-cols { grid-template-columns: 1fr 1fr; }
             .hero-title { font-size: 48px !important; }
+            .floating-avatar { display: none; /* Nascondi gli avatar galleggianti su mobile per pulizia */ }
         }
         @media (max-width: 767px) {
             .grid-4-cols { grid-template-columns: 1fr; }
@@ -254,7 +251,7 @@
                         <a class="nav-menu w-inline-block" href="https://app.allmates.ai/">
                             <div class="paragraph-02 nav-text">Sign in</div>
                         </a>
-                        <a class="button-03 w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40 w-inline-block" href="https://manage.allmates.ai/trial">
+                        <a class="button-03 w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40 w-inline-block" href="https://www.allmates.ai/getdemo">
                             <div class="button-03-text-wrap w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40">
                                 <div class="button-03-text-group">
                                     <div class="primary-button-text text-black w-variant-cc5dd8fd-70b5-4808-abb1-9e4187eb6e40">Get a demo</div>
@@ -269,12 +266,12 @@
 
     <!-- 1. HERO SECTION -->
     <section style="padding: 120px 0 80px; position: relative; overflow: hidden;">
-        <!-- Sfondo sfumato decorativo come l'originale -->
         <div style="position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: var(--allmates-gradient); filter: blur(150px); opacity: 0.1; z-index: 0; border-radius: 50%; pointer-events: none;"></div>
         
         <div class="custom-container text-center" style="position: relative; z-index: 1;">
-            <h1 class="heading-13" style="margin-bottom: 30px; color: #fff; font-size: 54px; line-height: 1.1;">
-                    Abilita la Collaborative Intelligence con il nuovo Action Layer per Qlik
+            <h1 class="hero-title" style="font-size: 64px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto; letter-spacing: -1px;">
+                Sblocca la tua Intelligenza.<br>
+                <span class="gradient-text">L'Action Layer per Qlik.</span>
             </h1>
             <p style="font-size: 20px; color: var(--text-muted); max-width: 760px; margin: 0 auto 48px; line-height: 1.6;">
                 Hai costruito un cervello analitico di prim'ordine con Qlik. Ora, dagli le mani per agire. Trasforma gli insight bloccati in risultati di business automatizzati con allmates.ai, l'Agentic Execution Layer definitivo per le aziende.
@@ -295,19 +292,28 @@
         </div>
     </section>
 
-    <!-- 2. 3 PICCOLE FEATURES -->
+    <!-- 2. 3 PICCOLE FEATURES (Allineate a sx con barra sfumata, come Allegato 1) -->
     <section style="padding: 0 0 100px;">
-        <div class="custom-container grid-3-cols text-center">
+        <div class="custom-container grid-3-cols" style="text-align: left;">
             <div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Esecuzione Autonoma</h3>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="accent-line-gradient" style="background: linear-gradient(to bottom, #9DE3FD, #70AFED);"></span>
+                    <h3 style="font-size: 24px; font-weight: 700; margin: 0;">Esecuzione Autonoma</h3>
+                </div>
                 <p style="color: var(--text-muted); font-size: 16px; line-height: 1.6;">I Mates gestiscono le attività ripetitive tra i tuoi vari sistemi, liberando il tuo team.</p>
             </div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Velocità degli Agenti</h3>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="accent-line-gradient" style="background: linear-gradient(to bottom, #888CE9, #B393E3);"></span>
+                    <h3 style="font-size: 24px; font-weight: 700; margin: 0;">Velocità degli Agenti</h3>
+                </div>
                 <p style="color: var(--text-muted); font-size: 16px; line-height: 1.6;">Riduci drasticamente il tempo che intercorre tra "insight" e "azione", passando da ore a millisecondi.</p>
             </div>
             <div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Human-in-the-Loop</h3>
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <span class="accent-line-gradient" style="background: linear-gradient(to bottom, #E3AFA0, #E28675);"></span>
+                    <h3 style="font-size: 24px; font-weight: 700; margin: 0;">Human-in-the-Loop</h3>
+                </div>
                 <p style="color: var(--text-muted); font-size: 16px; line-height: 1.6;">Mantieni il controllo strategico. I Mates preparano le azioni; tu fornisci l'approvazione finale con un clic.</p>
             </div>
         </div>
@@ -334,7 +340,7 @@
         </div>
     </section>
 
-    <!-- 4. MCP INTEGRATION -->
+    <!-- 4. MCP INTEGRATION (Testi intermedi inseriti, come Allegato 2) -->
     <section style="padding: 100px 0; border-top: 1px solid var(--border-light);">
         <div class="custom-container">
             <div class="text-center" style="max-width: 800px; margin: 0 auto 64px;">
@@ -343,7 +349,15 @@
                 <p style="font-size: 18px; color: var(--text-muted); line-height: 1.6; margin-bottom: 48px;">
                     allmates.ai fornisce il "sistema nervoso digitale" per la tua azienda. Implementiamo dei collaboratori digitali specializzati (Mates) che monitorano il tuo ambiente Qlik in tempo reale. Quando viene rilevato un trend critico, un valore anomalo o un rischio, non si limitano ad avvisarti, ma attivano il flusso di lavoro corrispondente.
                 </p>
-                <img src="assets/69d67765013be304376c0286_img-banner-qlik-large.avif" alt="MCP Integration" style="width: 100%; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                <img src="assets/69d67765013be304376c0286_img-banner-qlik-large.avif" alt="MCP Integration" style="width: 100%; border-radius: 16px; border: 1px solid var(--border-light); box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-bottom: 64px;">
+                
+                <!-- Testi intermedi mancanti aggiunti -->
+                <h2 style="font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px;">
+                    Native Qlik Integration via Model Context Protocol (MCP).
+                </h2>
+                <p style="font-size: 18px; color: var(--text-muted); line-height: 1.6; max-width: 700px; margin: 0 auto;">
+                    Non si tratta di un generico chatbot che legge un PDF. I nostri agenti parlano nativamente Qlik. Sfruttando il nuovo Model Context Protocol (MCP), gli Agenti allmates si collegano direttamente al core del tuo Qlik Engine.
+                </p>
             </div>
 
             <div class="grid-3-cols">
@@ -436,20 +450,24 @@
         </div>
     </section>
 
-    <!-- 7. BOTTOM CTA -->
-    <section class="text-center" style="padding: 40px 0 120px;">
-        <div class="custom-container">
-            <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 48px; flex-wrap: wrap;">
-                <img src="assets/69bdbfbc0e5f9de7b3f914d6_mate-feed-3.png" alt="Feed" style="height: 80px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
-                <img src="assets/69bdbfbc30c9fab3c26e7323_mate-feed-5.png" alt="Feed" style="height: 80px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
-                <img src="assets/69bdc41cd21ba2363275a65c_mate-feed-13.png" alt="Feed" style="height: 80px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
-            </div>
+    <!-- 7. BOTTOM CTA (Con Mates sparpagliati e fluttuanti, come Allegato 3) -->
+    <section class="text-center" style="padding: 100px 0 160px; position: relative; overflow: hidden;">
+        <!-- Avatar galleggianti posizionati assoluti -->
+        <img src="assets/69bdbfbc0e5f9de7b3f914d6_mate-feed-3.png" class="floating-avatar" style="width: 120px; top: 20%; left: 15%; animation: float 6s ease-in-out infinite;">
+        <img src="assets/69bdbfbc30c9fab3c26e7323_mate-feed-5.png" class="floating-avatar" style="width: 100px; bottom: 15%; left: 20%; animation: float-reverse 7s ease-in-out infinite;">
+        <img src="assets/69bdc41cd21ba2363275a65c_mate-feed-13.png" class="floating-avatar" style="width: 140px; top: 35%; right: 15%; animation: float 8s ease-in-out infinite;">
+
+        <div class="custom-container" style="position: relative; z-index: 5;">
+            <p style="font-size: 16px; font-weight: 600; margin-bottom: 24px; color: #fff;">
+                <span style="background: rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border-light);">
+                    Connetti la tua prima app Qlik <strong class="gradient-text" style="font-weight: 700;">in pochi minuti</strong>.
+                </span>
+            </p>
             
-            <p style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">Connetti la tua prima app Qlik <strong class="gradient-text" style="font-weight: 700;">in pochi minuti</strong>.</p>
-            <h2 style="font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px;">
+            <h2 style="font-size: 72px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px;">
                 Smetti di Rispondere a Domande.<br>Inizia a Fare il Lavoro.
             </h2>
-            <p style="font-size: 20px; color: var(--text-muted); max-width: 700px; margin: 0 auto 48px; line-height: 1.6;">
+            <p style="font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 48px; line-height: 1.6;">
                 Unisciti al 18% delle aziende che stanno passando dall'"Intelligenza Passiva" all'Esecuzione basata su Agenti. Dai ai tuoi dati il potere di far progredire il tuo business.
             </p>
             
